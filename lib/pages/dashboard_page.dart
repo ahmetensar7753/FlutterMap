@@ -28,6 +28,7 @@ class DashboardPage extends ConsumerWidget {
         builder: (context, watch, _) {
           return BottomNavigationBar(
             useLegacyColorScheme: false,
+            backgroundColor: MyColor.white,
             selectedLabelStyle: const TextStyle(
                 fontFamily: 'Urbanist',
                 fontWeight: FontWeight.w700,
@@ -35,8 +36,8 @@ class DashboardPage extends ConsumerWidget {
                 fontSize: 10),
             unselectedLabelStyle: const TextStyle(
                 fontFamily: 'Urbanist',
-                fontWeight: FontWeight.w600,
-                color: MyColor.g600,
+                fontWeight: FontWeight.w500,
+                color: MyColor.g500,
                 fontSize: 10),
             type: BottomNavigationBarType.fixed,
             currentIndex: selectedIndex,
@@ -50,7 +51,7 @@ class DashboardPage extends ConsumerWidget {
                 label: 'Home',
                 icon: Image.asset(
                   'assets/images/Home.png',
-                  color: MyColor.g600,
+                  color: MyColor.g500,
                 ),
               ),
               BottomNavigationBarItem(
@@ -59,7 +60,7 @@ class DashboardPage extends ConsumerWidget {
                 label: 'Saved',
                 icon: Image.asset(
                   'assets/images/Bookmark.png',
-                  color: MyColor.g600,
+                  color: MyColor.g500,
                 ),
               ),
               BottomNavigationBarItem(
@@ -68,7 +69,7 @@ class DashboardPage extends ConsumerWidget {
                 label: 'My Booking',
                 icon: Image.asset(
                   'assets/images/TickSquare.png',
-                  color: MyColor.g600,
+                  color: MyColor.g500,
                 ),
               ),
               BottomNavigationBarItem(
@@ -77,7 +78,7 @@ class DashboardPage extends ConsumerWidget {
                 label: 'My Wallet',
                 icon: Image.asset(
                   'assets/images/Wallet.png',
-                  color: MyColor.g600,
+                  color: MyColor.g500,
                 ),
               ),
               BottomNavigationBarItem(
@@ -86,7 +87,7 @@ class DashboardPage extends ConsumerWidget {
                 label: 'Account',
                 icon: Image.asset(
                   'assets/images/Profile.png',
-                  color: MyColor.g600,
+                  color: MyColor.g500,
                 ),
               ),
             ],

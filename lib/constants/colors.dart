@@ -9,6 +9,8 @@ abstract class MyColor {
   static const Color primary = Color(0xFF01B763);
   static const Color secondary = Color(0xFF335081);
 
+  static const Color primaryGradient = Color(0xFF34E895);
+
 // Alert & Status
   static const Color success = Color(0xFF12D18E);
   static const Color info = Color(0xFF01B763);

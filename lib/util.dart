@@ -29,6 +29,7 @@ const String stationsJSONstr = '''
         "socketTypeId": "CSS2",
         "power": 180,
         "status": "Available"
+        
       },
       {
         "id": 2,

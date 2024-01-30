@@ -1,9 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_app/constants/colors.dart';
 import 'package:map_app/services/riverpod_service.dart';
 import 'package:map_app/util.dart';
+import 'package:map_app/widgets/MapStationCardWidget.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -21,94 +24,20 @@ class HomePage extends ConsumerWidget {
         height: double.maxFinite,
         child: Stack(
           children: [
-            _createMapWidget(mapService, locationService),
+            _createMapWidget(context, mapService, locationService, ref),
             Positioned(
                 top: 0, child: _createSearchBar(context, searchTextController)),
+            const StationCardWidget(),
           ],
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [MyColor.white, MyColor.primaryGradient],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-            child: FloatingActionButton(
-              foregroundColor: MyColor.white,
-              backgroundColor: MyColor.primary.withOpacity(0.60),
-              shape: const CircleBorder(),
-              elevation: 10,
-              onPressed: () {},
-              child: Image.asset(
-                'assets/images/sortList.png',
-                color: MyColor.white,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [MyColor.white, MyColor.primaryGradient],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-            child: FloatingActionButton(
-              foregroundColor: MyColor.white,
-              backgroundColor: MyColor.primary.withOpacity(0.60),
-              shape: const CircleBorder(),
-              elevation: 10,
-              onPressed: () {},
-              child: Image.asset(
-                'assets/images/mapMarker.png',
-                color: MyColor.white,
-              ),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Container(
-            width: 50,
-            height: 50,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [MyColor.white, MyColor.primaryGradient],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-            child: FloatingActionButton(
-              foregroundColor: MyColor.white,
-              backgroundColor: MyColor.primary.withOpacity(0.60),
-              shape: const CircleBorder(),
-              elevation: 10,
-              onPressed: () {},
-              child: Image.asset(
-                'assets/images/currentLocation.png',
-                color: MyColor.white,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
 
-  FutureBuilder _createMapWidget(var mapService, var locationService) {
+  FutureBuilder _createMapWidget(BuildContext context, var mapService,
+      var locationService, WidgetRef ref) {
     return FutureBuilder(
-        future: mapService.getMarkers(),
+        future: mapService.getMarkers(context, ref),
         builder: (context, snapshot1) {
           if (snapshot1.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -151,6 +80,9 @@ class HomePage extends ConsumerWidget {
                       ),
                     };
                     return GoogleMap(
+                      onTap: (position) {
+                        ref.watch(cardStateProvider.notifier).state = false;
+                      },
                       mapToolbarEnabled:
                           false, // The custom toolbar has been created
                       compassEnabled: false,
@@ -234,7 +166,7 @@ class HomePage extends ConsumerWidget {
                 ),
               ),
             ),
-            InkWell(
+            GestureDetector(
               onTap: () {},
               child: Container(
                 width: 50,

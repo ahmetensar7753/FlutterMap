@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_app/constants/colors.dart';
+import 'package:map_app/services/overlay_manager.dart';
 import 'package:map_app/services/riverpod_service.dart';
 import 'package:map_app/util.dart';
 import 'package:map_app/widgets/MapStationCardWidget.dart';
@@ -82,6 +83,7 @@ class HomePage extends ConsumerWidget {
                     return GoogleMap(
                       onTap: (position) {
                         ref.watch(cardStateProvider.notifier).state = false;
+                        OverlayManager.hideOverlay();
                       },
                       mapToolbarEnabled:
                           false, // The custom toolbar has been created

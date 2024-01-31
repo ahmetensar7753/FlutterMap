@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,9 +7,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_app/constants/colors.dart';
 import 'package:map_app/model/station_model.dart';
 import 'package:map_app/services/location_service.dart';
+import 'package:map_app/services/overlay_manager.dart';
 import 'package:map_app/services/riverpod_service.dart';
 import 'package:map_app/util.dart';
-import 'package:map_app/widgets/CustomInfoWidget.dart';
 
 class MapService {
   final LocationService _locationService;
@@ -29,7 +30,17 @@ class MapService {
         position: position,
         anchor: const Offset(0.5, 0.5),
         onTap: () {
-          showOverlay(context, 'My Location', MyColor.black, MyColor.black);
+          try {
+            OverlayManager.hideOverlay();
+          } catch (e) {
+            log('error -> $e');
+          }
+          OverlayManager.showOverlay(
+            context,
+            'My Location',
+            MyColor.black,
+            MyColor.black,
+          );
         },
         icon: await BitmapDescriptor.fromAssetImage(
             const ImageConfiguration(), 'assets/images/avatarPhoto.png'),
@@ -51,9 +62,19 @@ class MapService {
             markerId: MarkerId(stationID.toString()),
             position: stationPosition,
             onTap: () {
+              try {
+                OverlayManager.hideOverlay();
+              } catch (e) {
+                log('error -> $e');
+              }
+
               openCard(ref, station);
-              showOverlay(context, stationTitle, MyColor.primaryGradient,
-                  MyColor.primary);
+              OverlayManager.showOverlay(
+                context,
+                stationTitle,
+                MyColor.primaryGradient,
+                MyColor.primary,
+              );
             },
             icon: await BitmapDescriptor.fromAssetImage(
                 const ImageConfiguration(),
@@ -67,9 +88,18 @@ class MapService {
             markerId: MarkerId(stationID.toString()),
             position: stationPosition,
             onTap: () {
+              try {
+                OverlayManager.hideOverlay();
+              } catch (e) {
+                log('error -> $e');
+              }
               openCard(ref, station);
-              showOverlay(
-                  context, stationTitle, MyColor.yellow, MyColor.trYellow);
+              OverlayManager.showOverlay(
+                context,
+                stationTitle,
+                MyColor.yellow,
+                MyColor.trYellow,
+              );
             },
             icon: await BitmapDescriptor.fromAssetImage(
                 const ImageConfiguration(),
@@ -83,9 +113,18 @@ class MapService {
             markerId: MarkerId(stationID.toString()),
             position: stationPosition,
             onTap: () {
+              try {
+                OverlayManager.hideOverlay();
+              } catch (e) {
+                log('error -> $e');
+              }
               openCard(ref, station);
-              showOverlay(
-                  context, stationTitle, MyColor.trRedGradient, MyColor.trRed);
+              OverlayManager.showOverlay(
+                context,
+                stationTitle,
+                MyColor.trRedGradient,
+                MyColor.trRed,
+              );
             },
             icon: await BitmapDescriptor.fromAssetImage(
                 const ImageConfiguration(),
@@ -117,10 +156,9 @@ class MapService {
     return stationList;
   }
 
-  void showOverlay(
-      BuildContext context, String data, Color color1, Color color2) {
-    OverlayEntry overlayEntry =
-        OverlayEntry(builder: (context) => const SizedBox());
+  /* void showOverlay(BuildContext context, String data, Color color1,
+      Color color2, OverlayEntry overlayEntry) {
+    overlayEntry = OverlayEntry(builder: (context) => const SizedBox());
     overlayEntry = OverlayEntry(builder: (context) {
       return Positioned(
         top: 160,
@@ -136,7 +174,7 @@ class MapService {
     });
 
     Overlay.of(context).insert(overlayEntry);
-  }
+  } */
 
   Set<Polygon> getPolygons() {
     List<LatLng> polygonPoints = [

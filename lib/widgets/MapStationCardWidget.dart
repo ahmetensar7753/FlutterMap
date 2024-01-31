@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:map_app/constants/colors.dart';
 import 'package:map_app/model/station_model.dart';
 import 'package:map_app/pages/station_detail_page.dart';
+import 'package:map_app/services/overlay_manager.dart';
 import 'package:map_app/services/riverpod_service.dart';
 
 class StationCardWidget extends ConsumerWidget {
@@ -245,6 +246,7 @@ class StationCardWidget extends ConsumerWidget {
                             surfaceTintColor: MyColor.white,
                           ),
                           onPressed: () {
+                            OverlayManager.hideOverlay();
                             if (Platform.isAndroid) {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => StationDetail(

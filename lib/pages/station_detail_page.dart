@@ -65,7 +65,9 @@ class _StationDetailState extends ConsumerState<StationDetail>
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GestureDetector(
-          onTap: () => Navigator.canPop(context),
+          onTap: () {
+            Navigator.of(context).pop();
+          },
           child: Container(
             width: 45,
             height: 45,
@@ -388,7 +390,7 @@ class _StationDetailState extends ConsumerState<StationDetail>
           ),
           Container(
             width: double.maxFinite,
-            height: double.maxFinite,
+            height: 1500,
             margin: const EdgeInsets.only(left: 20, right: 20),
             child: TabBarView(
               controller: tabController,
